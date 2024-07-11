@@ -1,16 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { router } from 'expo-router';
 import { Button } from 'native-base';
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
 import DateTimeInput from './form/DateTimeInput';
 import InputField from './form/InputField';
 import SelectField from './form/SelectField';
 import { categories } from '@/dummy/categories';
 import { accounts } from '@/dummy/accounts';
-import { addRecord } from '@/store/slice/dataSlice';
+import { useSQlite } from '@/contexts/DBProvider';
 
 export default function ExpenseEntry() {
   const {
@@ -25,21 +23,20 @@ export default function ExpenseEntry() {
       account: 'accounts',
     },
   });
-  const dispatch = useDispatch();
+  const { createRecord } = useSQlite();
   const onSubmit = (data) => {
-    dispatch(
-      addRecord({
-        id: uuidv4(),
-        date: data.date.toString(),
-        amount: data.amount,
-        category: data.category,
-        account: data.account,
-      }),
-    );
+    createRecord(data)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    router.back();
   };
   return (
     <View style={{ paddingVertical: 12 }}>
-      <DateTimeInput control={control} name="date" label="Date" />
+      <DateTimeInput control={control} name="date" dateLabel="Date" timeLabel="Time" />
       <View style={{ height: 12 }} />
       <InputField autoFocus control={control} name="amount" label="Amount" keyboardType="numeric" />
       <View style={{ height: 12 }} />

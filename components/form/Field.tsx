@@ -18,6 +18,7 @@ export default function Field({
     <Pressable
       onPress={onPress}
       style={{
+        flex: 1,
         paddingVertical: 6,
         paddingHorizontal: 12,
         backgroundColor: theme.colors.surfaceVariant,

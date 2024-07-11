@@ -4,18 +4,21 @@ import { Control, Controller } from 'react-hook-form';
 import { useDisclose } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Field from './Field';
-import { parsetimestamp, formatdate } from '@/helpers/datetime';
+import { parsetimestamp, formatdate, formattime } from '@/helpers/datetime';
 
 export default function DateTimeInput({
   control,
   name,
-  label,
+  dateLabel,
+  timeLabel,
 }: {
   control: Control<any>;
   name: string;
-  label: string;
+  dateLabel: string;
+  timeLabel: string;
 }) {
-  const { isOpen, onOpen, onClose } = useDisclose();
+  const { isOpen: dateIsOpen, onOpen: dateOnOpen, onClose: dateOnClose } = useDisclose();
+  const { isOpen: timeIsOpen, onOpen: timeOnOpen, onClose: timeOnClose } = useDisclose();
   return (
     <Controller
       control={control}
@@ -23,17 +26,31 @@ export default function DateTimeInput({
         required: true,
       }}
       render={({ field: { onChange, onBlur, value } }) => (
-        <View>
-          <Field label={label} value={formatdate(value)} focused={isOpen} onPress={onOpen} />
-          {isOpen && (
+        <View style={{ flexDirection: 'row'}}>
+          <Field label={dateLabel} value={formatdate(value)} focused={dateIsOpen} onPress={dateOnOpen} />
+          {dateIsOpen && (
             <DateTimePicker
               value={new Date()}
               onChange={(e) => {
                 console.log(e);
                 if (e.type == 'set') {
-                  onChange(parsetimestamp(e.nativeEvent.timestamp));
+                  onChange(parsetimestamp(e.nativeEvent.timestamp, 'date', value));
                 }
-                onClose();
+                dateOnClose();
+              }}
+            />
+          )}
+          <Field label={timeLabel} value={formattime(value)} focused={timeIsOpen} onPress={timeOnOpen} />
+          {timeIsOpen && (
+            <DateTimePicker
+              mode='time'
+              value={new Date()}
+              onChange={(e) => {
+                console.log(e);
+                if (e.type == 'set') {
+                  onChange(parsetimestamp(e.nativeEvent.timestamp, 'time', value));
+                }
+                timeOnClose();
               }}
             />
           )}
