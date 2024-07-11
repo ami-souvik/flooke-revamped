@@ -1,31 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import { useForm } from 'react-hook-form';
-import InputField from '@/components/form/InputField';
+import { SegmentedButtons, Surface } from 'react-native-paper';
+import ExpenseEntry from '@/components/ExpenseEntry';
 
 export default function Entry() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      amount: '',
-    },
-  });
-  const onSubmit = (data) => console.log(data);
+  const [value, setValue] = useState('expense');
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        marginHorizontal: 'auto',
+        margin: 12,
       }}
     >
-      <Text variant="bodyLarge">{new Date().toString()}</Text>
-      <InputField control={control} name="amount" label="Amount" />
-      <Button onPress={handleSubmit(onSubmit)}>Click Me!</Button>
+      <Surface elevation={1} style={{ borderRadius: 24 }}>
+        <SegmentedButtons
+          value={value}
+          onValueChange={setValue}
+          buttons={[
+            {
+              value: 'income',
+              label: 'Income',
+            },
+            {
+              value: 'expense',
+              label: 'Expense',
+            },
+            { value: 'transfer', label: 'Transfer' },
+          ]}
+          style={{
+            borderRadius: 24,
+            backgroundColor: '#FFFFFF',
+          }}
+          theme={{
+            colors: {
+              onSecondaryContainer: '#FFFFFF',
+              secondaryContainer: '#896A67',
+
+              onSurface: 'gray',
+              outline: 'transparent',
+            },
+          }}
+        />
+      </Surface>
+      <ExpenseEntry />
     </View>
   );
 }

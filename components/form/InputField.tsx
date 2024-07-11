@@ -7,6 +7,7 @@ export default function InputField({
   name,
   label,
   placeholder,
+  ...props
 }: {
   control: Control<any>;
   name: string;
@@ -20,7 +21,22 @@ export default function InputField({
         required: true,
       }}
       render={({ field: { onChange, onBlur, value } }) => (
-        <TextInput label={label} placeholder={placeholder} onBlur={onBlur} onChangeText={onChange} value={value} />
+        <TextInput
+          label={label}
+          placeholder={placeholder}
+          onBlur={onBlur}
+          onChangeText={onChange}
+          value={value}
+          style={{
+            fontSize: 20,
+            fontFamily: 'mukta-reg',
+          }}
+          contentStyle={{
+            fontFamily: 'mukta-reg',
+          }}
+          keyboardType="number-pad"
+          {...props}
+        />
       )}
       name={name}
     />

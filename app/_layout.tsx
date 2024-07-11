@@ -6,7 +6,8 @@ export default function RootLayout() {
     <RootWrapper>
       <Stack>
         <Stack.Screen name="index" />
-        <Stack.Screen name="entry" />
+        <Stack.Screen name="entry" options={{ animation: 'fade' }} />
+        <Stack.Screen name="scanner" options={{ animation: 'fade' }} />
       </Stack>
     </RootWrapper>
   );
