@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button, Dialog } from 'react-native-paper';
-import { useForm } from 'react-hook-form';
-import InputField from '@/components/form/InputField';
+import { Linking, StyleSheet, View } from 'react-native';
 import { CameraView } from 'expo-camera';
+import ExpenseEntryQRDialog, { UPIInfo } from '@/components/ExpenseEntryQRDialog';
+import { useSQlite } from '@/contexts/DBProvider';
+import { Record } from '@/database/schemas/record';
+
+function extractdata(payurl: string): UPIInfo | null {
+  if (payurl.length === 0) {
+    return null;
+  }
+  const data: UPIInfo = {
+    name: '',
+    upiid: '',
+  };
+  const paramstr = payurl.split('?')[1];
+  paramstr.split('&').forEach((k) => {
+    let key = k.split('=')[0];
+    let value = k.split('=')[1];
+    if (key === 'pn') {
+      data.name = decodeURI(value);
+    } else if (key === 'pa') {
+      data.upiid = value;
+    }
+  });
+  return data;
+}
 
 export default function Scanner() {
   const [showEntry, setShowEntry] = useState(false);
   const [payurl, setPayurl] = useState('');
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      amount: '',
-    },
-  });
-  const onSubmit = (data: { amount: string }) => {
+  const { createRecord } = useSQlite();
+  const onSubmit = async (data: Record) => {
     console.log(payurl);
     console.log(data);
+    const result = await Linking.openURL(`${payurl}&am=${data.amount}`);
+    console.log(result);
   };
   return (
     <View
@@ -27,17 +42,7 @@ export default function Scanner() {
         flex: 1,
       }}
     >
-      {
-        <Dialog visible={showEntry} onDismiss={() => setShowEntry(false)}>
-          <Dialog.Title>Alert</Dialog.Title>
-          <Dialog.Content>
-            <InputField control={control} name="amount" label="Amount" />
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={handleSubmit(onSubmit)}>Go ahead</Button>
-          </Dialog.Actions>
-        </Dialog>
-      }
+      <ExpenseEntryQRDialog data={extractdata(payurl)} onClose={() => setShowEntry(false)} onSubmit={onSubmit} />
       {!showEntry && (
         <CameraView
           style={styles.camera}
@@ -45,7 +50,6 @@ export default function Scanner() {
             barcodeTypes: ['qr'],
           }}
           onBarcodeScanned={(result) => {
-            console.log(result.raw);
             setShowEntry(true);
             setPayurl(result.raw);
           }}

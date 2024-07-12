@@ -25,6 +25,7 @@ export default function ExpenseEntry() {
   });
   const { createRecord } = useSQlite();
   const onSubmit = (data) => {
+    console.log(data);
     createRecord(data)
       .then((result) => {
         console.log(result);

@@ -24,10 +24,10 @@ export default function SelectField({
         required: true,
       }}
       render={({ field: { onChange, onBlur, value } }) => (
-        <View style={{ flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Field label={label} value={value} focused={isOpen} onPress={onOpen} />
           <Actionsheet isOpen={isOpen} onClose={onClose}>
-            <Actionsheet.Content style={{ height: 600 }}>
+            <Actionsheet.Content style={{ height: 360 }}>
               <CategoryCase items={items} onSelect={onChange} onClose={onClose} />
             </Actionsheet.Content>
           </Actionsheet>
