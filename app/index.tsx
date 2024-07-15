@@ -1,24 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { SectionList, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton } from 'react-native-paper';
 import { router } from 'expo-router';
 import { useSQlite } from '@/contexts/DBProvider';
 import { groupByDate, summarizeRecords } from '@/helpers/record';
+import { changeMonth } from '@/helpers/datetime';
+import { DBRecord } from '@/database/schemas/record';
+import { RecordLineItem } from '@/components/RecordLineItem';
 
 export default function Index() {
-  const { findRecord, deleteRecord } = useSQlite();
+  const { findRecord, deleteRecords } = useSQlite();
+  const [month, setMonth] = useState(new Date());
   const [records, setRecords] = useState<DBRecord[]>([]);
   useEffect(() => {
-    // deleteRecord()
-    findRecord().then(data => setRecords(data))
-  }, []);
+    // deleteRecords()
+    findRecord(month).then(data => setRecords(data))
+  }, [month]);
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: 'center',
       }}
     >
+      <View style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 4,
+        paddingHorizontal: 12,
+        backgroundColor: '#fff',
+      }}>
+        <IconButton
+          icon="less-than"
+          onPress={() => {
+            setMonth(m => changeMonth(m, -1))
+          }}
+        />
+        <Text style={{ fontSize: 24 }}>{`${(month.getMonth()+1).toString().padStart(2, '0')}, ${month.getFullYear()}`}</Text>
+        <IconButton
+          icon="greater-than"
+          onPress={() => {
+            setMonth(m => changeMonth(m, 1))
+          }}
+        />
+      </View>
       <View style={{
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -50,21 +76,7 @@ export default function Index() {
       <SectionList
         sections={groupByDate(records)}
         keyExtractor={(item, index) => item.id + index}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              width: '100%',
-              flexDirection: 'row',
-              borderBottomWidth: 1,
-              borderBottomColor: '#ddd',
-              backgroundColor: '#fff',
-            }}
-          >
-            <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg' }}>{item.category}</Text>
-            <Text style={{ flex: 1.5, padding: 12, fontFamily: 'mukta-reg' }}>{item.account}</Text>
-            <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg', textAlign: 'right' }}>₹{item.amount}</Text>
-          </View>
-        )}
+        renderItem={({ item }) => <RecordLineItem item={item} />}
         renderSectionHeader={({section: {date}}) => (
           <View
             style={{
@@ -84,7 +96,7 @@ export default function Index() {
         size={28}
         style={{ position: 'absolute', bottom: 140, right: 20 }}
         onPress={() => {
-          findRecord().then(data => setRecords(data))
+          findRecord(month).then(data => setRecords(data))
         }}
       />
       <IconButton
@@ -105,6 +117,6 @@ export default function Index() {
           router.push('/scanner');
         }}
       />
-    </View>
+    </SafeAreaView>
   );
 }

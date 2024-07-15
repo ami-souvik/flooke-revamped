@@ -22,6 +22,12 @@ export function formattime(date: Date): string {
   return date.toLocaleTimeString();
 }
 
-export function generictimestamp(date: Date): string {
+export function sqlitedatetimestamp(date: Date): string {
   return date.toISOString();
+}
+
+export function changeMonth(date: Date, changeBy: 1 | -1): Date {
+  date = new Date(date.getTime())
+  date.setMonth(date.getMonth() + changeBy)
+  return date
 }

@@ -38,8 +38,8 @@ export default function ExpenseEntryQRDialog({
     <Dialog visible={!!data} onDismiss={onClose}>
       <Dialog.Content>
         <View style={{ paddingVertical: 12, alignItems: 'center' }}>
-          <Text style={{ fontSize: 24, fontFamily: 'mukta-reg' }}>{data.name}</Text>
-          <Text style={{ fontFamily: 'mukta-reg' }}>UPI id: {data.upiid}</Text>
+          <Text style={{ fontSize: 24, fontFamily: 'mukta-reg' }}>{data?.name}</Text>
+          <Text style={{ fontFamily: 'mukta-reg' }}>UPI id: {data?.upiid}</Text>
           <View style={{ position: 'relative', flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ position: 'absolute', left: -36, fontSize: 32 }}>₹</Text>
             <View

@@ -2,7 +2,7 @@ import { DBRecord } from '@/database/schemas/record';
 
 function extractdate(stamp: string) {
   const d = new Date(stamp);
-  return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+  return d.getDate().toString().padStart(2, '0') + '/' + (d.getMonth() + 1).toString().padStart(2, '0') + '/' + d.getFullYear();
 }
 
 export interface RecordGroupByDate {
@@ -18,7 +18,7 @@ export function groupByDate(records: DBRecord[]): RecordGroupByDate[] {
     }
     grouped[extractdate(rec.date)].push(rec);
   });
-  return Object.keys(grouped).map(date => ({
+  return Object.keys(grouped).sort().map(date => ({
     date,
     data: grouped[date]
   }));
