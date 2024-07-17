@@ -6,8 +6,8 @@ import { Button } from 'native-base';
 import DateTimeInput from './form/DateTimeInput';
 import InputField from './form/InputField';
 import SelectField from './form/SelectField';
-import { categories } from '@/dummy/categories';
-import { accounts } from '@/dummy/accounts';
+import { categories } from '@/mock/categories';
+import { accounts } from '@/mock/accounts';
 import { useSQlite } from '@/contexts/DBProvider';
 
 export default function ExpenseEntry() {

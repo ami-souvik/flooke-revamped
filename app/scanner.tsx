@@ -28,7 +28,7 @@ function extractdata(payurl: string): UPIInfo | null {
 
 export default function Scanner() {
   const [showEntry, setShowEntry] = useState(false);
-  const [payurl, setPayurl] = useState('');
+  const [payurl, setPayurl] = useState('?pn=Souvik&pa=amsouvik@paytm');
   const { createRecord } = useSQlite();
   const onSubmit = async (data: Record) => {
     console.log(payurl);
@@ -43,7 +43,7 @@ export default function Scanner() {
       }}
     >
       <ExpenseEntryQRDialog data={extractdata(payurl)} onClose={() => setShowEntry(false)} onSubmit={onSubmit} />
-      {!showEntry && (
+      {/* {!showEntry && (
         <CameraView
           style={styles.camera}
           barcodeScannerSettings={{
@@ -54,7 +54,7 @@ export default function Scanner() {
             setPayurl(result.raw);
           }}
         ></CameraView>
-      )}
+      )} */}
     </View>
   );
 }

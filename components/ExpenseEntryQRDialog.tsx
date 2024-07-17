@@ -3,7 +3,7 @@ import { Text, TextInput, View } from 'react-native';
 import { Dialog, IconButton, Surface, useTheme } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 import SelectField from './form/SelectField';
-import { categories } from '@/dummy/categories';
+import { categories } from '@/mock/categories';
 import InputFieldBase from './form/InputFieldBase';
 import { Record } from '@/database/schemas/record';
 
@@ -35,7 +35,7 @@ export default function ExpenseEntryQRDialog({
     },
   });
   return (
-    <Dialog visible={!!data} onDismiss={onClose}>
+    <Dialog visible={!!data} onDismiss={onClose} style={{ backgroundColor: 'white' }}>
       <Dialog.Content>
         <View style={{ paddingVertical: 12, alignItems: 'center' }}>
           <Text style={{ fontSize: 24, fontFamily: 'mukta-reg' }}>{data?.name}</Text>
@@ -49,7 +49,7 @@ export default function ExpenseEntryQRDialog({
                 marginTop: 12,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#ccc',
+                backgroundColor: '#eee',
                 borderRadius: 12,
                 overflow: 'hidden',
               }}
