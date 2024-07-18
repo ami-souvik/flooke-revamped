@@ -1,7 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { TextInput } from 'react-native';
-import { useTheme } from 'react-native-paper';
 
 export default function InputFieldBase({
   control,
@@ -17,7 +16,6 @@ export default function InputFieldBase({
   placeholder?: string;
   fontSize: number;
 }) {
-  const theme = useTheme();
   return (
     <Controller
       control={control}
