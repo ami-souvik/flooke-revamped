@@ -8,7 +8,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }}/>
         <Stack.Screen name="entry" options={{ animation: 'fade' }} />
-        <Stack.Screen name="scanner" options={{ animation: 'fade' }} />
+        <Stack.Screen name="scanner" options={{ headerShown: false, animation: 'fade' }} />
       </Stack>
     </RootWrapper>
   );

@@ -120,7 +120,7 @@ export default function Index() {
         size={28}
         style={{ position: 'absolute', bottom: 140, right: 20 }}
         onPress={() => {
-          findRecord().then((data) => setRecords(data));
+          findRecord(month).then((data) => setRecords(data));
         }}
       />
       <IconButton

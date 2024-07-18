@@ -3,6 +3,7 @@ export interface Record {
     amount: number;
     category: string;
     account: string;
+    confirmed: boolean;
 }
 
 export interface DBRecord {
@@ -11,4 +12,5 @@ export interface DBRecord {
     amount: number;
     category: string;
     account: string;
+    confirmed: boolean;
 }

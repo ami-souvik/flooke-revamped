@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { SegmentedButtons, Surface } from 'react-native-paper';
+import { Surface } from 'react-native-paper';
 import ExpenseEntry from '@/components/ExpenseEntry';
+import SegmentedButtonsBase from '@/components/form/base/SegmentedButtonsBase';
 
 export default function Entry() {
   const [value, setValue] = useState('expense');
@@ -13,7 +14,7 @@ export default function Entry() {
       }}
     >
       <Surface elevation={1} style={{ borderRadius: 24 }}>
-        <SegmentedButtons
+        <SegmentedButtonsBase
           value={value}
           onValueChange={setValue}
           buttons={[
@@ -27,19 +28,6 @@ export default function Entry() {
             },
             { value: 'transfer', label: 'Transfer' },
           ]}
-          style={{
-            borderRadius: 24,
-            backgroundColor: '#FFFFFF',
-          }}
-          theme={{
-            colors: {
-              onSecondaryContainer: '#FFFFFF',
-              secondaryContainer: '#896A67',
-
-              onSurface: 'gray',
-              outline: 'transparent',
-            },
-          }}
         />
       </Surface>
       <ExpenseEntry />
