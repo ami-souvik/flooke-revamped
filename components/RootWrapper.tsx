@@ -5,6 +5,7 @@ import { NativeBaseProvider } from 'native-base';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
 import { DBProvider } from '@/contexts/DBProvider';
+import { insertDefaultCategories } from '@/database/operations/category';
 
 const theme = {
   ...DefaultTheme,
@@ -35,28 +36,34 @@ export default function RootWrapper({ children }: { children: any }) {
 }
 
 async function migrateDbIfNeeded(db: SQLiteDatabase) {
-  console.log('MIGRATE CALLED');
-  // const DATABASE_VERSION = 1;
-  // let { user_version: currentDbVersion } = await db.getFirstAsync<{ user_version: number }>(
-  //   'PRAGMA user_version'
-  // );
-  // console.log(currentDbVersion);
-  // if (currentDbVersion >= DATABASE_VERSION) {
-  //   return;
-  // }
-  // if (currentDbVersion === 0) {
-    // console.log('MIGRATE CALLED');
-    
-    // await db.execAsync(`
-    // PRAGMA journal_mode = 'wal';
-    // CREATE TABLE records (id TEXT NOT NULL, account TEXT NOT NULL, amount INTEGER NOT NULL, category TEXT NOT NULL, date TEXT NOT NULL);
-    // `);
-    // await db.runAsync('INSERT INTO records (id, account, amount, category, date) VALUES (?, ?, ?, ?, ?)', '1234', 'accounts', 12, 'lifestyle', '12/02/2020');
-    // await db.runAsync('INSERT INTO records (id, account, amount, category, date) VALUES (?, ?, ?, ?, ?)', '3456', 'accounts', 50, 'cigerette', '12/02/2020');
-  //   currentDbVersion = 1;
-  // }
+  // MIGRATION SCRIPT
+
+  // DROP TABLES
+  await db.execAsync(`
+    DROP TABLE IF EXISTS todos;
+  `);
+  // DROP TABLE IF EXISTS categories;
+  // DROP TABLE IF EXISTS records;
+
+  // CREATE TABLES
+  await db.execAsync(`
+    PRAGMA journal_mode = WAL;
+    CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY NOT NULL, account TEXT NOT NULL, amount INTEGER,\
+     category TEXT NOT NULL, categoryemojicode TEXT, date TEXT NOT NULL, confirmed INTEGER);
+    CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL, emojicode TEXT);
+  `);
+
+  const DATABASE_VERSION = 1;
+  let { user_version: currentDbVersion } = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
+  if (currentDbVersion >= DATABASE_VERSION) {
+    return;
+  }
+  if (currentDbVersion === 0) {
+    insertDefaultCategories(db);
+    currentDbVersion = 1;
+  }
   // if (currentDbVersion === 1) {
   //   Add more migrations
   // }
-  // await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
+  await db.execAsync(`PRAGMA user_version = ${DATABASE_VERSION}`);
 }

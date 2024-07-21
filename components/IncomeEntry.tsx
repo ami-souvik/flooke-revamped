@@ -23,16 +23,9 @@ export default function IncomeEntry() {
       account: 'accounts',
     },
   });
-  const { createRecord } = useSQlite();
+  const { saveRecord } = useSQlite();
   const onSubmit = (data) => {
-    console.log(data);
-    createRecord(data)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    saveRecord(data);
     router.back();
   };
   return (

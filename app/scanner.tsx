@@ -28,11 +28,11 @@ function extractdata(payurl: string): UPIInfo | null {
 
 export default function Scanner() {
   const [payurl, setPayurl] = useState<string>('');
-  const { createRecord } = useSQlite();
+  const { saveRecord } = useSQlite();
   const onSubmit = async (data: Record) => {
     const result = await Linking.openURL(`${payurl}&am=${data.amount}`);
     data.confirmed = false;
-    createRecord(result);
+    saveRecord(data);
   };
   return (
     <View

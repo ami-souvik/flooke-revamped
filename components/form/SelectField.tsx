@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
-import { Actionsheet, useDisclose } from 'native-base';
+import { Actionsheet } from 'native-base';
+import { useDisclose } from '@/hooks/useDisclose';
 import Field from './Field';
 import CategoryCase, { CategoryItem } from '../CategoryCase';
 
@@ -25,9 +26,14 @@ export default function SelectField({
       }}
       render={({ field: { onChange, onBlur, value } }) => (
         <View style={{ flexDirection: 'row' }}>
-          <Field label={label} value={value} focused={isOpen} onPress={onOpen} />
+          <Field
+            label={label}
+            value={`${value.emojicode ? String.fromCodePoint(parseInt(value.emojicode, 16)) : ''} ${value.value}`}
+            focused={isOpen}
+            onPress={onOpen}
+          />
           <Actionsheet isOpen={isOpen} onClose={onClose}>
-            <Actionsheet.Content style={{ height: 360 }}>
+            <Actionsheet.Content style={{ height: 400 }}>
               <CategoryCase items={items} onSelect={onChange} onClose={onClose} />
             </Actionsheet.Content>
           </Actionsheet>

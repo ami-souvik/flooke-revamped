@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
-import { useDisclose } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useDisclose } from '@/hooks/useDisclose';
 import Field from './Field';
 import { parsetimestamp, formatdate, formattime } from '@/helpers/datetime';
 
@@ -26,7 +26,7 @@ export default function DateTimeInput({
         required: true,
       }}
       render={({ field: { onChange, onBlur, value } }) => (
-        <View style={{ flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Field label={dateLabel} value={formatdate(value)} focused={dateIsOpen} onPress={dateOnOpen} />
           {dateIsOpen && (
             <DateTimePicker
@@ -43,7 +43,7 @@ export default function DateTimeInput({
           <Field label={timeLabel} value={formattime(value)} focused={timeIsOpen} onPress={timeOnOpen} />
           {timeIsOpen && (
             <DateTimePicker
-              mode='time'
+              mode="time"
               value={new Date()}
               onChange={(e) => {
                 console.log(e);

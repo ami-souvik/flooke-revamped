@@ -1,37 +1,38 @@
-import React, { StyleSheet, View } from "react-native";
-import { CameraView } from "expo-camera";
-import { IconButton } from "react-native-paper";
-import { router } from "expo-router";
+import React, { Button, StyleSheet, Text, View } from 'react-native';
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { IconButton } from 'react-native-paper';
+import { router } from 'expo-router';
 
 export default function ScannerCam({ setPayurl }: { setPayurl: (v: string) => void }) {
-    return (
-      <View style={styles.container}>
-        <CameraView
-          style={styles.camera}
-          facing={'back'}
-          barcodeScannerSettings={{
-            barcodeTypes: ['qr'],
-          }}
-          onBarcodeScanned={(result) => {
-            setPayurl(result?.raw || '');
-          }}>
-          <View style={styles.focusBox}>
-            <View style={[styles.focusChild, styles.focusTopLeft]} />
-            <View style={[styles.focusChild, styles.focusTopRight]} />
-            <View style={[styles.focusChild, styles.focusBottomLeft]} />
-            <View style={[styles.focusChild, styles.focusBottomRight]} />
-          </View>
-          <View style={styles.buttonContainer}>
-            <IconButton
-              icon="close"
-              size={40}
-              onPress={() => router.back()}
-              style={styles.closeButton}
-            />
-          </View>
-        </CameraView>
-      </View>
-    )
+  const [permission, requestPermission] = useCameraPermissions();
+  if (permission && !permission.granted) {
+    // Camera permissions are not granted yet.
+    requestPermission();
+  }
+  return (
+    <View style={styles.container}>
+      <CameraView
+        style={styles.camera}
+        facing={'back'}
+        barcodeScannerSettings={{
+          barcodeTypes: ['qr'],
+        }}
+        onBarcodeScanned={(result) => {
+          setPayurl(result?.raw || '');
+        }}
+      >
+        <View style={styles.focusBox}>
+          <View style={[styles.focusChild, styles.focusTopLeft]} />
+          <View style={[styles.focusChild, styles.focusTopRight]} />
+          <View style={[styles.focusChild, styles.focusBottomLeft]} />
+          <View style={[styles.focusChild, styles.focusBottomRight]} />
+        </View>
+        <View style={styles.buttonContainer}>
+          <IconButton icon="close" size={40} onPress={() => router.back()} style={styles.closeButton} />
+        </View>
+      </CameraView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -41,26 +42,26 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   buttonContainer: {
     margin: 80,
     backgroundColor: 'transparent',
   },
   closeButton: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   focusBox: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: 400
+    width: 400,
   },
   focusChild: {
     width: 40,
     height: 40,
     margin: 80,
     borderRadius: 2,
-    borderColor: '#ffffff'
+    borderColor: '#ffffff',
   },
   focusTopLeft: {
     borderTopWidth: 6,
@@ -77,6 +78,5 @@ const styles = StyleSheet.create({
   focusBottomLeft: {
     borderBottomWidth: 6,
     borderLeftWidth: 6,
-  }
+  },
 });
-  

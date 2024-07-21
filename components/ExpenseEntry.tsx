@@ -1,38 +1,63 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Button } from 'native-base';
 import DateTimeInput from './form/DateTimeInput';
 import InputField from './form/InputField';
 import SelectField from './form/SelectField';
-import { categories } from '@/mock/categories';
 import { accounts } from '@/mock/accounts';
 import { useSQlite } from '@/contexts/DBProvider';
+import { DBRecord, Record } from '@/database/schemas/record';
+import { DBCategory } from '@/database/schemas/category';
+import { IconButton } from 'react-native-paper';
 
 export default function ExpenseEntry() {
+  const params = useLocalSearchParams<DBRecord>();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      date: new Date(),
-      amount: 0,
-      category: '',
-      account: 'accounts',
+      date: params.date ? new Date(params.date) : new Date(),
+      amount: params.amount ? Number(params.amount) : 0,
+      category: {
+        emojicode: params.categoryemojicode ? params.categoryemojicode : null,
+        value: params.category ? params.category : '',
+      },
+      account: {
+        value: params.account ? params.account : '',
+      },
     },
   });
-  const { createRecord } = useSQlite();
-  const onSubmit = (data) => {
+  const { saveRecord, deleteRecord, findCategory } = useSQlite();
+  const [categories, setCategories] = useState<DBCategory[]>([]);
+  const onDelete = () => {
+    if (!params?.id) return;
+    Alert.alert('Delete Record', 'Are you sure about deleting this record?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          deleteRecord(params.id);
+          router.back();
+        },
+      },
+    ]);
+  };
+  useEffect(() => {
+    findCategory().then((data) => setCategories(data));
+  }, []);
+  const onSubmit = (data: Record) => {
+    data.confirmed = true;
+    if (params.id) data.id = params.id;
     console.log(data);
-    createRecord(data)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    saveRecord(data);
     router.back();
   };
   return (
@@ -45,11 +70,27 @@ export default function ExpenseEntry() {
       <View style={{ height: 12 }} />
       <SelectField control={control} name="account" label="Account" items={accounts} />
       <View style={{ height: 12 }} />
-      <Button onPress={handleSubmit(onSubmit)}>Add</Button>
-      <View style={{ height: 12 }} />
-      <Button variant="outline" onPress={handleSubmit(onSubmit)}>
-        Continue
-      </Button>
+      <View style={styles.buttonContainer}>
+        <Button style={styles.addButton} onPress={handleSubmit(onSubmit)}>
+          {params.id ? 'Save' : 'Add'}
+        </Button>
+        <Button variant="outline" style={styles.continueButton} onPress={handleSubmit(onSubmit)}>
+          Continue
+        </Button>
+        {params?.id && <IconButton icon="delete" onPress={onDelete} />}
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  addButton: {
+    flex: 1,
+  },
+  continueButton: {
+    flex: 1,
+  },
+});

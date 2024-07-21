@@ -6,8 +6,8 @@ export default function RootLayout() {
   return (
     <RootWrapper>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }}/>
-        <Stack.Screen name="entry" options={{ animation: 'fade' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="entry" options={{ headerShown: false, animation: 'fade' }} />
         <Stack.Screen name="scanner" options={{ headerShown: false, animation: 'fade' }} />
       </Stack>
     </RootWrapper>

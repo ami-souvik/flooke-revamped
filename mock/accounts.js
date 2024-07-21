@@ -1,14 +1,11 @@
 export const accounts = [
   {
-    label: 'Cash',
-    value: 'cash',
+    value: 'Cash',
   },
   {
-    label: 'Accounts',
-    value: 'accounts',
+    value: 'Accounts',
   },
   {
-    label: 'Card',
-    value: 'card',
+    value: 'Card',
   },
 ];
