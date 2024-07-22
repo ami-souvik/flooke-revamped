@@ -22,13 +22,8 @@ export default function ExpenseEntry() {
     defaultValues: {
       date: params.date ? new Date(params.date) : new Date(),
       amount: params.amount ? Number(params.amount) : 0,
-      category: {
-        emojicode: params.categoryemojicode ? params.categoryemojicode : null,
-        value: params.category ? params.category : '',
-      },
-      account: {
-        value: params.account ? params.account : '',
-      },
+      category: params.category ? params.category : '',
+      account: params.account ? params.account : '',
     },
   });
   const { saveRecord, deleteRecord, findCategory } = useSQlite();

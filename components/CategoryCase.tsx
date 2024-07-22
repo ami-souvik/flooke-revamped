@@ -26,7 +26,8 @@ export default function CategoryCase({
             key={item.value}
             style={styles.item}
             onPress={() => {
-              onSelect(item);
+              console.log(item);
+              onSelect(item.value);
               onClose();
             }}
           >

@@ -32,7 +32,7 @@ export default function Category() {
   useEffect(() => {
     refreshCategory();
   }, []);
-  const onSubmit = (data) => {
+  const onSubmit = (data: DBCategory) => {
     if (state.id) data.id = state.id;
     saveCategory(data);
     onClose();

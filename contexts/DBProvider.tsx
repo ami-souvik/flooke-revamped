@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { SQLiteRunResult, useSQLiteContext, type SQLiteDatabase } from 'expo-sqlite';
 import { Record, DBRecord } from '@/database/schemas/record';
 import { Category, DBCategory } from '@/database/schemas/category';
@@ -65,6 +65,9 @@ export function DBProvider({ children }: { children: any }) {
   const refreshCategory = async () => {
     setCategpories(await findCategory(db));
   };
+  useEffect(() => {
+    refreshRecord();
+  }, [range])
   return (
     <DBContext.Provider
       value={{

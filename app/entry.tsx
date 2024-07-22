@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { router } from 'expo-router';
-import { IconButton, Surface } from 'react-native-paper';
-import ExpenseEntry from '@/components/ExpenseEntry';
-import SegmentedButtonsBase from '@/components/form/base/SegmentedButtonsBase';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, View } from 'react-native';
+import ExpenseEntry from '@/components/ExpenseEntry';
 import { Header } from '@/components/Header';
 
 export default function Entry() {

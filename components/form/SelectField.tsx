@@ -3,8 +3,9 @@ import { View } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
 import { Actionsheet } from 'native-base';
 import { useDisclose } from '@/hooks/useDisclose';
+import { Category } from '@/database/schemas/category';
 import Field from './Field';
-import CategoryCase, { CategoryItem } from '../CategoryCase';
+import CategoryCase from '../CategoryCase';
 
 export default function SelectField({
   control,
@@ -15,7 +16,7 @@ export default function SelectField({
   control: Control<any>;
   name: string;
   label: string;
-  items: CategoryItem[];
+  items: Category[];
 }) {
   const { isOpen, onOpen, onClose } = useDisclose();
   return (
@@ -28,7 +29,7 @@ export default function SelectField({
         <View style={{ flexDirection: 'row' }}>
           <Field
             label={label}
-            value={`${value.emojicode ? String.fromCodePoint(parseInt(value.emojicode, 16)) : ''} ${value.value}`}
+            value={value}
             focused={isOpen}
             onPress={onOpen}
           />

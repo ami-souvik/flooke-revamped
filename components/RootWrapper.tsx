@@ -42,17 +42,16 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
   await db.execAsync(`
     DROP TABLE IF EXISTS todos;
   `);
-  // DROP TABLE IF EXISTS categories;
   // DROP TABLE IF EXISTS records;
 
   // CREATE TABLES
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
     CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY NOT NULL, account TEXT NOT NULL, amount INTEGER,\
-     category TEXT NOT NULL, categoryemojicode TEXT, date TEXT NOT NULL, confirmed INTEGER);
-    CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL, emojicode TEXT);
+     category TEXT NOT NULL, date TEXT NOT NULL, confirmed INTEGER);
+    CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
   `);
-
+  
   const DATABASE_VERSION = 1;
   let { user_version: currentDbVersion } = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   if (currentDbVersion >= DATABASE_VERSION) {

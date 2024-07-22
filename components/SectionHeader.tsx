@@ -1,26 +1,26 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Hstack, Text } from './primitive';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function SectionHeader({ date, summary }) {
   return (
-    <View
+    <Hstack
+      invert
       style={{
         width: '100%',
         padding: 12,
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#fff',
       }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontSize: 20, fontFamily: 'mukta-reg' }}>{date.substring(0, 2)}</Text>
+      <View invert style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text invert style={{ fontSize: 20 }}>{date.substring(0, 2)}</Text>
         <Text
+          invert
           style={{
             fontSize: 16,
-            fontFamily: 'mukta-reg',
             paddingHorizontal: 8,
             marginHorizontal: 6,
             backgroundColor: '#333',
@@ -37,7 +37,7 @@ export function SectionHeader({ date, summary }) {
           ].substring(0, 3)}
         </Text>
       </View>
-      <Text style={{ fontSize: 20, fontFamily: 'mukta-reg' }}>₹{summary.expenses}</Text>
-    </View>
+      <Text invert style={{ fontSize: 20 }}>₹{summary.expenses}</Text>
+    </Hstack>
   );
 }

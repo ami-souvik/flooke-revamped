@@ -1,7 +1,8 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { DBRecord } from '@/database/schemas/record';
+import { Hstack, Text, Vstack } from './primitive';
 
 export function RecordLineItem({ item }: { item: DBRecord }) {
   const onPress = () => {
@@ -9,18 +10,22 @@ export function RecordLineItem({ item }: { item: DBRecord }) {
   };
   return (
     <Pressable onPress={onPress} style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <View style={styles.unconfirmedFlagCase}>
+      <Vstack style={{ flex: 1 }}>
+        <Hstack style={{
+            marginTop: 2,
+            marginLeft: 8,
+            alignItems: 'flex-start',
+          }}>
           {!item.confirmed && <Text style={styles.unconfirmedFlag}>unconfirmed</Text>}
-        </View>
-        <View style={styles.contentCase}>
-          <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg' }}>{item.account}</Text>
-          <Text style={{ flex: 1.5, flexDirection: 'row', padding: 12, fontFamily: 'mukta-reg' }}>
+        </Hstack>
+        <Hstack>
+          <Text style={{ flex: 1, padding: 12 }}>{item.account}</Text>
+          <Text style={{ flex: 1.5, flexDirection: 'row', padding: 12 }}>
             <Text>{item.category}</Text>
           </Text>
-          <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg', textAlign: 'right' }}>₹{item.amount}</Text>
-        </View>
-      </View>
+          <Text style={{ flex: 1, padding: 12, textAlign: 'right' }}>₹{item.amount}</Text>
+        </Hstack>
+      </Vstack>
     </Pressable>
   );
 }
@@ -31,14 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: '#ddd',
     backgroundColor: '#fff',
-  },
-  contentCase: {
-    flexDirection: 'row',
-  },
-  unconfirmedFlagCase: {
-    marginTop: 2,
-    marginLeft: 8,
-    alignItems: 'flex-start',
   },
   unconfirmedFlag: {
     paddingVertical: 2,
