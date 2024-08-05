@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { SplashScreen } from 'expo-router';
 import { NativeBaseProvider } from 'native-base';
-import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme } from 'react-native-paper';
 import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
 import { DBProvider } from '@/contexts/DBProvider';
 import { insertDefaultCategories } from '@/database/operations/category';
+import { FirebaseProvider } from '@/firebase/FirebaseProvider';
 
 const theme = {
   ...DefaultTheme,
@@ -28,12 +29,15 @@ export default function RootWrapper({ children }: { children: any }) {
       SplashScreen.hideAsync();
     }
   }, [loaded, error]);
+  if (!loaded && !error) {
+    return null;
+  }
   return (
     <SQLiteProvider databaseName="test.db" onInit={migrateDbIfNeeded}>
       <DBProvider>
-        <PaperProvider theme={theme}>
+        <FirebaseProvider>
           <NativeBaseProvider>{children}</NativeBaseProvider>
-        </PaperProvider>
+        </FirebaseProvider>
       </DBProvider>
     </SQLiteProvider>
   );

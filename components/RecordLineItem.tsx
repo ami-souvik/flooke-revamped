@@ -12,7 +12,7 @@ export function RecordLineItem({ item }: { item: DBRecord }) {
   };
   return (
     <Pressable onPress={onPress} style={styles.container}>
-      <View style={{ width: 1, backgroundColor: colors.mindaro }} />
+      <View style={{ width: 2, backgroundColor: colors.mindaro }} />
       <Vstack style={{ flex: 1, backgroundColor: colors.background }}>
         {!item.confirmed && <Text style={styles.unconfirmedFlag}>unconfirmed</Text>}
         <Hstack style={{ alignItems: 'center', padding: 6 }}>

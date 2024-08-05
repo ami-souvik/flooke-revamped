@@ -4,6 +4,7 @@ import { TextInput, View } from 'react-native';
 import { InputFieldProps } from '../types/form';
 import { Text } from '../primitive';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Fonts } from '@/constants/Fonts';
 
 export default function InputField({ control, name, label, placeholder, fontSize = 20, ...props }: InputFieldProps) {
   const colors = useThemeColor();
@@ -31,7 +32,7 @@ export default function InputField({ control, name, label, placeholder, fontSize
               {...props}
               style={{
                 fontSize,
-                fontFamily: 'mukta-reg',
+                fontFamily: Fonts.body.regular,
                 color: colors.text,
               }}
             />

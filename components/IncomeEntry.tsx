@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { router } from 'expo-router';
-import { Button } from 'native-base';
 import DateTimeInput from './form/DateTimeInput';
 import InputField from './form/InputField';
 import SelectField from './form/SelectField';
 import { categories } from '@/mock/categories';
 import { accounts } from '@/mock/accounts';
 import { useSQlite } from '@/contexts/DBProvider';
+import { Button } from './primitive';
 
 export default function IncomeEntry() {
   const {

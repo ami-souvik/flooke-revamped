@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { Dialog, IconButton, Surface, useTheme } from 'react-native-paper';
+import { Dialog, IconButton, Surface } from 'react-native-paper';
 import { useForm } from 'react-hook-form';
 import SelectField from './form/SelectField';
 import { categories } from '@/mock/categories';
@@ -21,7 +21,6 @@ export default function ExpenseEntryQRDialog({
   onClose: () => void;
   onSubmit: (v: Record) => void;
 }) {
-  const theme = useTheme();
   const {
     control,
     handleSubmit,
@@ -73,7 +72,7 @@ export default function ExpenseEntryQRDialog({
         </View>
       </Dialog.Content>
       <Dialog.Actions>
-        <Surface elevation={4} style={{ borderRadius: 12, backgroundColor: theme.colors.primary }}>
+        <Surface elevation={4} style={{ borderRadius: 12 }}>
           <IconButton icon="plus" iconColor="white" onPress={handleSubmit(onSubmit)} />
         </Surface>
       </Dialog.Actions>

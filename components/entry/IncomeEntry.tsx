@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { router, useLocalSearchParams } from 'expo-router';
-import DateTimeInput from './form/DateTimeInput';
-import InputField from './form/InputField';
-import SelectField from './form/SelectField';
+import DateTimeInput from '../form/DateTimeInput';
+import InputField from '../form/InputField';
+import SelectField from '../form/SelectField';
 import { accounts } from '@/mock/accounts';
 import { useSQlite } from '@/contexts/DBProvider';
 import { DBRecord, Record } from '@/database/schemas/record';
@@ -12,7 +12,7 @@ import { DBCategory } from '@/database/schemas/category';
 import { IconButton } from 'react-native-paper';
 import { Button } from '@/components/primitive';
 
-export default function ExpenseEntry() {
+export default function IncomeEntry() {
   const params = useLocalSearchParams<DBRecord>();
   const {
     control,

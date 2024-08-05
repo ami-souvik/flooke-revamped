@@ -11,7 +11,7 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { SafeAreaView, Hstack, Vstack, Text } from '@/components/primitive';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
-export default function Dboard() {
+export default function Dashboard() {
   const colors = useThemeColor();
   const { range, prevRange, nextRange, records, deleteRecords } = useSQlite();
   useEffect(() => {
@@ -79,20 +79,11 @@ export default function Dboard() {
         size={28}
         style={{
           position: 'absolute',
-          bottom: 80,
+          bottom: 20,
           right: 20,
         }}
         onPress={() => {
           router.push('/entry');
-        }}
-      />
-      <IconButton
-        mode="contained"
-        icon="camera"
-        size={28}
-        style={{ position: 'absolute', bottom: 20, right: 20 }}
-        onPress={() => {
-          router.push('/scanner');
         }}
       />
     </SafeAreaView>

@@ -1,6 +1,6 @@
 import React from 'react';
-import Dboard from '@/components/screens/Dboard';
+import Dashboard from '@/components/screens/Dashboard';
 
 export default function Index() {
-  return <Dboard />;
+  return <Dashboard />;
 }
