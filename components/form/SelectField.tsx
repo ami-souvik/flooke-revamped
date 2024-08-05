@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Control, Controller } from 'react-hook-form';
-import { Actionsheet } from 'native-base';
 import { useDisclose } from '@/hooks/useDisclose';
 import { Category } from '@/database/schemas/category';
 import Field from './Field';
 import CategoryCase from '../CategoryCase';
+import { Actionsheet } from '../primitive';
 
 export default function SelectField({
   control,
@@ -27,16 +27,9 @@ export default function SelectField({
       }}
       render={({ field: { onChange, onBlur, value } }) => (
         <View style={{ flexDirection: 'row' }}>
-          <Field
-            label={label}
-            value={value}
-            focused={isOpen}
-            onPress={onOpen}
-          />
-          <Actionsheet isOpen={isOpen} onClose={onClose}>
-            <Actionsheet.Content style={{ height: 400 }}>
-              <CategoryCase items={items} onSelect={onChange} onClose={onClose} />
-            </Actionsheet.Content>
+          <Field label={label} value={value} focused={isOpen} onPress={onOpen} />
+          <Actionsheet isOpen={isOpen} onClose={onClose} height={400}>
+            <CategoryCase items={items} onSelect={onChange} onClose={onClose} />
           </Actionsheet>
         </View>
       )}

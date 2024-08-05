@@ -30,7 +30,27 @@ export default function Scanner() {
   const [payurl, setPayurl] = useState<string>('');
   const { saveRecord } = useSQlite();
   const onSubmit = async (data: Record) => {
-    const result = await Linking.openURL(`${payurl}&am=${data.amount}`);
+    const urlmap = {};
+    let urlpref = '';
+    const parts = payurl.split('&');
+    parts.forEach((each) => {
+      if (each.split('=')[0]) {
+        urlmap[each.split('=')[0]] = each.split('=')[1];
+      }
+    });
+    urlmap.am = data.amount;
+    urlmap.cu = 'INR';
+    urlmap.tr = '1234567890';
+    urlmap.tid = 'akjsnckanclkas';
+    urlmap.tn = 'This is my note';
+    urlpref += Object.keys(urlmap)
+      .map((k) => k + '=' + urlmap[k])
+      .join('&');
+    urlpref = urlpref.replace('upi://pay?', 'paytmmp://pay?');
+    console.log(urlpref);
+    const result = await Linking.openURL(
+      'phonepe://pay?pa=chowdhuryshreya811@okhdfcbank&pn=Shreya Chowdhury&tn=Test UPI&am=1&cu=INR&mc=1234&tr=01234',
+    );
     data.confirmed = false;
     saveRecord(data);
   };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Pressable } from 'react-native';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { Text } from '../primitive';
 
 export default function Field({
   label,
@@ -13,7 +14,7 @@ export default function Field({
   focused: boolean;
   onPress: () => void;
 }) {
-  const theme = useTheme();
+  const colors = useThemeColor();
   return (
     <Pressable
       onPress={onPress}
@@ -21,15 +22,13 @@ export default function Field({
         flex: 1,
         paddingVertical: 6,
         paddingHorizontal: 12,
-        backgroundColor: theme.colors.surfaceVariant,
+        backgroundColor: colors.foreground,
         borderBottomWidth: focused ? 2 : 1,
       }}
     >
       <Text
         style={{
           fontSize: 12,
-          fontFamily: 'mukta-reg',
-          color: theme.colors.primary,
         }}
       >
         {label}
@@ -37,7 +36,6 @@ export default function Field({
       <Text
         style={{
           fontSize: 20,
-          fontFamily: 'mukta-reg',
         }}
       >
         {value}

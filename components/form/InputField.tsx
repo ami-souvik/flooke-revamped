@@ -1,11 +1,12 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Text, TextInput, View } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { TextInput, View } from 'react-native';
 import { InputFieldProps } from '../types/form';
+import { Text } from '../primitive';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function InputField({ control, name, label, placeholder, fontSize = 20, ...props }: InputFieldProps) {
-  const theme = useTheme();
+  const colors = useThemeColor();
   return (
     <Controller
       control={control}
@@ -18,19 +19,11 @@ export default function InputField({ control, name, label, placeholder, fontSize
             style={{
               paddingVertical: 6,
               paddingHorizontal: 12,
-              backgroundColor: theme.colors.surfaceVariant,
+              backgroundColor: colors.foreground,
               borderBottomWidth: 1,
             }}
           >
-            <Text
-              style={{
-                fontSize: 12,
-                fontFamily: 'mukta-reg',
-                color: theme.colors.primary,
-              }}
-            >
-              {label}
-            </Text>
+            <Text style={{ fontSize: 12 }}>{label}</Text>
             <TextInput
               value={String(value)}
               onChangeText={onChange}
@@ -39,6 +32,7 @@ export default function InputField({ control, name, label, placeholder, fontSize
               style={{
                 fontSize,
                 fontFamily: 'mukta-reg',
+                color: colors.text,
               }}
             />
           </View>

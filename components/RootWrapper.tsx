@@ -17,7 +17,11 @@ const theme = {
 
 export default function RootWrapper({ children }: { children: any }) {
   const [loaded, error] = useFonts({
-    'mukta-reg': require('@/assets/fonts/Mukta-Regular.ttf'),
+    // 'mukta-reg': require('@/assets/fonts/Mukta-Regular.ttf'),
+    'segoe ui': require('@/assets/fonts/Segoe UI.ttf'),
+    tahoma: require('@/assets/fonts/tahoma.ttf'),
+    'inter-reg': require('@/assets/fonts/Inter_28pt-Regular.ttf'),
+    cascadia: require('@/assets/fonts/Cascadia.ttf'),
   });
   useEffect(() => {
     if (loaded || error) {
@@ -51,7 +55,7 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
      category TEXT NOT NULL, date TEXT NOT NULL, confirmed INTEGER);
     CREATE TABLE IF NOT EXISTS categories (id TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL);
   `);
-  
+
   const DATABASE_VERSION = 1;
   let { user_version: currentDbVersion } = await db.getFirstAsync<{ user_version: number }>('PRAGMA user_version');
   if (currentDbVersion >= DATABASE_VERSION) {

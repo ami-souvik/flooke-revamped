@@ -2,50 +2,26 @@ import React, { Pressable } from 'react-native';
 import { changeMonth, monthYear } from '@/helpers/datetime';
 import { useSQlite } from '@/contexts/DBProvider';
 import { Hstack, Text } from '@/components/primitive';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function MonthStrip({ month }: { month: Date }) {
+  const colors = useThemeColor();
   const { prevRange, nextRange } = useSQlite();
   return (
-    <Hstack style={{ height: 40, alignItems: 'center', marginBottom: 6 }}>
+    <Hstack style={{ alignItems: 'center', padding: 6 }}>
       <Pressable onPress={prevRange}>
-        <Text
-          style={{
-            width: 80,
-            textAlign: 'center',
-          }}
-        >
-          {monthYear(changeMonth(month, -1))}
-        </Text>
+        <Text>{monthYear(changeMonth(month, -1))}</Text>
       </Pressable>
-      <Hstack
-        invert
+      <Text
         style={{
-          width: 100,
-          height: 40,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 20,
+          paddingHorizontal: 12,
+          color: colors.mindaro,
         }}
       >
-        <Text
-          invert
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-          }}
-        >
-          {monthYear(month)}
-        </Text>
-      </Hstack>
+        {monthYear(month)}
+      </Text>
       <Pressable onPress={nextRange}>
-        <Text
-          style={{
-            width: 80,
-            textAlign: 'center',
-          }}
-        >
-          {monthYear(changeMonth(month, 1))}
-        </Text>
+        <Text>{monthYear(changeMonth(month, 1))}</Text>
       </Pressable>
     </Hstack>
   );

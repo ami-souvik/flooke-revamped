@@ -4,6 +4,7 @@ import { Tabs } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Fonts } from '@/constants/Fonts';
 
 export default function TabLayout() {
   const colors = useThemeColor();
@@ -11,16 +12,16 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          height: 58,
-          padding: 4,
+          height: 64,
+          padding: 6,
+          backgroundColor: colors.background,
         },
         tabBarActiveTintColor: colors.tint,
         headerShown: false,
         tabBarLabelStyle: {
           fontSize: 14,
-          fontFamily: 'mukta-reg',
-          color: colors.charcoal,
-          marginBottom: 2
+          fontFamily: Fonts.body.regular,
+          marginBottom: 2,
         },
       }}
     >
@@ -29,13 +30,11 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ focused, color, size }) => {
-            return <View style={{
-              paddingVertical: 4,
-              paddingHorizontal: 12,
-              borderRadius: 12,
-              backgroundColor: focused ? colors.background : 'transparent' }}>
-              <Feather name="home" size={size} color={color} />
-            </View>;
+            return (
+              <View>
+                <Feather name="home" size={size} color={color} />
+              </View>
+            );
           },
         }}
       />
@@ -44,13 +43,11 @@ export default function TabLayout() {
         options={{
           title: 'Category',
           tabBarIcon: ({ focused, color, size }) => {
-            return <View style={{
-              paddingVertical: 4,
-              paddingHorizontal: 12,
-              borderRadius: 12,
-              backgroundColor: focused ? colors.background : 'transparent' }}>
-              <MaterialIcons name="category" size={size} color={color} />
-            </View>;
+            return (
+              <View>
+                <MaterialIcons name="category" size={size} color={color} />
+              </View>
+            );
           },
         }}
       />

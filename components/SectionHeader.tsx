@@ -1,33 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Hstack, Text } from './primitive';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export function SectionHeader({ date, summary }) {
+  const colors = useThemeColor();
   return (
     <Hstack
-      invert
       style={{
         width: '100%',
-        padding: 12,
         alignItems: 'center',
         justifyContent: 'space-between',
+        padding: 6,
       }}
     >
-      <View invert style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text invert style={{ fontSize: 20 }}>{date.substring(0, 2)}</Text>
-        <Text
-          invert
-          style={{
-            fontSize: 16,
-            paddingHorizontal: 8,
-            marginHorizontal: 6,
-            backgroundColor: '#333',
-            borderRadius: 12,
-            color: '#ffffff',
-          }}
-        >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text>{date.substring(0, 2)}</Text>
+        <Text style={{ marginLeft: 4 }}>
           {DAYS[
             new Date(
               Number(date.substring(6, 10)),
@@ -37,7 +28,7 @@ export function SectionHeader({ date, summary }) {
           ].substring(0, 3)}
         </Text>
       </View>
-      <Text invert style={{ fontSize: 20 }}>₹{summary.expenses}</Text>
+      <Text>₹{summary.expenses}</Text>
     </Hstack>
   );
 }

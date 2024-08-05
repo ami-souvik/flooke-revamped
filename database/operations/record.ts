@@ -14,7 +14,7 @@ export async function findRecord(db: SQLiteDatabase, range: Date): Promise<DBRec
 export function saveRecord(db: SQLiteDatabase, data: Record): Promise<SQLiteRunResult> {
   return db.runAsync(
     `INSERT INTO records (id, account, amount, category, date, confirmed) VALUES\
-     ("${data.id ? data.id : uuidv4()}", "${data.account.value}", ${Number(data.amount)}, "${data.category.value}",\
+     ("${data.id ? data.id : uuidv4()}", "${data.account}", ${Number(data.amount)}, "${data.category}",\
      "${sqlitedatetimestamp(data.date)}", "${data.confirmed ? 1 : 0}")
      ON CONFLICT(id) DO
       UPDATE

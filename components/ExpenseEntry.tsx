@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Button } from 'native-base';
 import DateTimeInput from './form/DateTimeInput';
 import InputField from './form/InputField';
 import SelectField from './form/SelectField';
@@ -11,6 +10,7 @@ import { useSQlite } from '@/contexts/DBProvider';
 import { DBRecord, Record } from '@/database/schemas/record';
 import { DBCategory } from '@/database/schemas/category';
 import { IconButton } from 'react-native-paper';
+import { Button } from '@/components/primitive';
 
 export default function ExpenseEntry() {
   const params = useLocalSearchParams<DBRecord>();
@@ -51,7 +51,6 @@ export default function ExpenseEntry() {
   const onSubmit = (data: Record) => {
     data.confirmed = true;
     if (params.id) data.id = params.id;
-    console.log(data);
     saveRecord(data);
     router.back();
   };
@@ -66,10 +65,10 @@ export default function ExpenseEntry() {
       <SelectField control={control} name="account" label="Account" items={accounts} />
       <View style={{ height: 12 }} />
       <View style={styles.buttonContainer}>
-        <Button style={styles.addButton} onPress={handleSubmit(onSubmit)}>
+        <Button style={{ flex: 1 }} onPress={handleSubmit(onSubmit)}>
           {params.id ? 'Save' : 'Add'}
         </Button>
-        <Button variant="outline" style={styles.continueButton} onPress={handleSubmit(onSubmit)}>
+        <Button style={{ flex: 1 }} variant="outlined" onPress={handleSubmit(onSubmit)}>
           Continue
         </Button>
         {params?.id && <IconButton icon="delete" onPress={onDelete} />}

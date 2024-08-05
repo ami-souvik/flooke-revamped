@@ -3,7 +3,7 @@ export const accounts = [
     value: 'Cash',
   },
   {
-    value: 'Accounts',
+    value: 'Accts',
   },
   {
     value: 'Card',

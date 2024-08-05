@@ -32,7 +32,6 @@ export default function DateTimeInput({
             <DateTimePicker
               value={new Date()}
               onChange={(e) => {
-                console.log(e);
                 if (e.type == 'set') {
                   onChange(parsetimestamp(e.nativeEvent.timestamp, 'date', value));
                 }
@@ -46,7 +45,6 @@ export default function DateTimeInput({
               mode="time"
               value={new Date()}
               onChange={(e) => {
-                console.log(e);
                 if (e.type == 'set') {
                   onChange(parsetimestamp(e.nativeEvent.timestamp, 'time', value));
                 }

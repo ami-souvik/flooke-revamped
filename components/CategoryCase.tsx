@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
-import { Text } from 'react-native-paper';
 import { Category } from '@/database/schemas/category';
+import { Text } from './primitive';
 
 const COLUMNS = 3;
 
@@ -26,7 +26,6 @@ export default function CategoryCase({
             key={item.value}
             style={styles.item}
             onPress={() => {
-              console.log(item);
               onSelect(item.value);
               onClose();
             }}
@@ -49,8 +48,8 @@ const styles = StyleSheet.create({
     width: `${100 / COLUMNS}%`,
     padding: 16,
     flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 0.5,
+    borderColor: '#aaa',
     justifyContent: 'center',
     alignItems: 'center',
   },

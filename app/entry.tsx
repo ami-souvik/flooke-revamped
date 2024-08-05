@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ExpenseEntry from '@/components/ExpenseEntry';
 import { Header } from '@/components/Header';
+import { SafeAreaView } from '@/components/primitive';
 
 export default function Entry() {
   const [value, setValue] = useState('expense');
@@ -9,7 +9,7 @@ export default function Entry() {
     <SafeAreaView
       style={{
         flex: 1,
-        margin: 12,
+        paddingHorizontal: 12,
       }}
     >
       <Header

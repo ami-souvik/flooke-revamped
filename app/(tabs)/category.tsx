@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconButton } from 'react-native-paper';
-import { Actionsheet } from 'native-base';
 import { useStateDisclose } from '@/hooks/useDisclose';
 import { useSQlite } from '@/contexts/DBProvider';
 import InputField from '@/components/form/InputField';
 import { DBCategory } from '@/database/schemas/category';
 import { Header } from '@/components/Header';
+import { Actionsheet, Button, Hstack, SafeAreaView, Text, Vstack } from '@/components/primitive';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function Category() {
+  const colors = useThemeColor();
   const { categories, refreshCategory, saveCategory, deleteCategory } = useSQlite();
   const { state, onOpen, onClose } = useStateDisclose<DBCategory>(null);
   const [type, setType] = useState('category');
@@ -45,25 +46,23 @@ export default function Category() {
     <SafeAreaView
       style={{
         flex: 1,
-        margin: 12,
+        padding: 12,
       }}
     >
-      <Actionsheet isOpen={!!state} onClose={onClose}>
-        <Actionsheet.Content style={{ height: 480 }}>
-          <View style={{ width: '100%', marginHorizontal: 'auto' }}>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
-                <InputField autoFocus control={control} name="value" label="Category" />
-              </View>
+      <Actionsheet isOpen={!!state} onClose={onClose} height={480}>
+        <Vstack style={{ width: '100%', marginHorizontal: 'auto' }}>
+          <Hstack>
+            <View style={{ flex: 1 }}>
+              <InputField autoFocus control={control} name="value" label="Category" />
             </View>
-            <Button title="Save Category" onPress={handleSubmit(onSubmit)} />
+          </Hstack>
+          <Button onPress={handleSubmit(onSubmit)}>Save Category</Button>
+        </Vstack>
+        {state?.id && (
+          <View style={{ flexDirection: 'row' }}>
+            <IconButton icon="delete" onPress={onDelete} />
           </View>
-          {state?.id && (
-            <View style={{ flexDirection: 'row' }}>
-              <IconButton icon="delete" onPress={onDelete} />
-            </View>
-          )}
-        </Actionsheet.Content>
+        )}
       </Actionsheet>
       <Header
         buttons={[
@@ -82,13 +81,13 @@ export default function Category() {
       <FlatList
         data={categories}
         renderItem={({ item }) => (
-          <Pressable onPress={() => onOpen(item)} style={{ flexDirection: 'row' }}>
-            <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg' }}>{item.value}</Text>
+          <Pressable onPress={() => onOpen(item)} style={{ flexDirection: 'row', paddingVertical: 12 }}>
+            <Text style={{ flex: 1 }}>{item.value}</Text>
           </Pressable>
         )}
       />
-      <Pressable onPress={() => onOpen({})} style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-        <Text style={{ flex: 1, padding: 12, fontFamily: 'mukta-reg' }}>Add Category</Text>
+      <Pressable onPress={() => onOpen({})} style={{ flexDirection: 'row', backgroundColor: colors.foreground }}>
+        <Text style={{ flex: 1, padding: 12 }}>Add Category</Text>
       </Pressable>
     </SafeAreaView>
   );

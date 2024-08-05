@@ -1,5 +1,7 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Text } from '@/components/primitive';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function SegmentedButtonsBase({
   value,
@@ -10,14 +12,15 @@ export default function SegmentedButtonsBase({
   buttons: { value: string; label: string }[];
   onValueChange: (v: string) => void;
 }) {
+  const colors = useThemeColor();
   return (
     <View style={styles.container}>
       {buttons.map((item) => (
         <Pressable
           onPress={() => onValueChange(item.value)}
-          style={[styles.button, item.value === value && { backgroundColor: '#dddddd' }]}
+          style={[styles.button, { backgroundColor: item.value === value ? colors.foreground : colors.background }]}
         >
-          <Text style={styles.buttonText}>{item.label}</Text>
+          <Text>{item.label}</Text>
         </Pressable>
       ))}
     </View>
@@ -28,16 +31,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
     overflow: 'hidden',
   },
   button: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonText: {
-    fontFamily: 'mukta-reg',
+    borderWidth: 1,
+    borderColor: '#444',
   },
 });
