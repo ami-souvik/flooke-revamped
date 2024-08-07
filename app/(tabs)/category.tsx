@@ -9,6 +9,7 @@ import { DBCategory } from '@/database/schemas/category';
 import { Header } from '@/components/Header';
 import { Actionsheet, Button, Hstack, SafeAreaView, Text, Vstack } from '@/components/primitive';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import Record from '@/components/layout/Record';
 
 export default function Category() {
   const colors = useThemeColor();
@@ -81,8 +82,8 @@ export default function Category() {
       <FlatList
         data={categories}
         renderItem={({ item }) => (
-          <Pressable onPress={() => onOpen(item)} style={{ flexDirection: 'row', paddingVertical: 12 }}>
-            <Text style={{ flex: 1 }}>{item.value}</Text>
+          <Pressable onPress={() => onOpen(item)}>
+            <Record values={[item.value]} />
           </Pressable>
         )}
       />

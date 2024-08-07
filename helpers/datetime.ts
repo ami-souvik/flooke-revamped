@@ -1,3 +1,5 @@
+export const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 export function parsetimestamp(timestamp: string | number, type: 'date' | 'time', prev: Date): Date {
   if (!prev) return new Date(timestamp);
   if (type === 'date') {

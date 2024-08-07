@@ -22,6 +22,29 @@ const Static = {
   mindaro: '#E9FF70',
 };
 
+export interface Colors {
+  text: string;
+  foreground: string;
+  background: string;
+  tint: string;
+  icon: string;
+  tabIconDefault: string;
+  tabIconSelected: string;
+  invert: {
+    text: string;
+    background: string;
+  };
+
+  white: string;
+  gunmetal: string;
+  charcoal: string;
+  richblack: string;
+  licorice: string;
+  red: string;
+  yellow: string;
+  mindaro: string;
+}
+
 export const Colors = {
   light: {
     text: '#11181C',
@@ -42,7 +65,7 @@ export const Colors = {
   dark: {
     text: Static.white,
     foreground: Static.gunmetal,
-    background: Static.richblack,
+    background: Static.gunmetal,
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
