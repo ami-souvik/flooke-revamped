@@ -41,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="category"
         options={{
-          title: 'Category',
+          title: 'Cat',
           tabBarIcon: ({ focused, color, size }) => {
             return (
               <View>
@@ -51,6 +51,32 @@ export default function TabLayout() {
           },
         }}
       />
+      {/* <Tabs.Screen
+        name="statistics"
+        options={{
+          title: 'Stats',
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <View>
+                <MaterialIcons name="category" size={size} color={color} />
+              </View>
+            );
+          },
+        }}
+      /> */}
+      {/* <Tabs.Screen
+        name="accounts"
+        options={{
+          title: 'Acct',
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <View>
+                <MaterialIcons name="category" size={size} color={color} />
+              </View>
+            );
+          },
+        }}
+      /> */}
     </Tabs>
   );
 }
