@@ -64,7 +64,7 @@ export const Colors = {
   },
   dark: {
     text: Static.white,
-    foreground: Static.gunmetal,
+    foreground: Static.licorice,
     background: Static.gunmetal,
     tint: tintColorDark,
     icon: '#9BA1A6',

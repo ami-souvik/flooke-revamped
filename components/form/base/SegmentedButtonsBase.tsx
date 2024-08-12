@@ -2,6 +2,7 @@ import React from 'react';
 import { Text } from '@/components/primitive';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Surface } from 'react-native-paper';
 
 export default function SegmentedButtonsBase({
   value,
@@ -29,7 +30,7 @@ export default function SegmentedButtonsBase({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 40,
     flexDirection: 'row',
     overflow: 'hidden',
   },
